@@ -5,9 +5,9 @@ extends TileMap
 # var a = 2
 # var b = "text"
 #this code is currently broken but it does work with odd number square grids
-var mapHeight=7
-var mapLength=7
-var cellSize=7
+var mapHeight=6
+var mapLength=5
+var cellSize=3
 #visitedCells is a dict just so i can have quick lookup
 #doesn't matter in this case but still nice
 var visitedCells={}
@@ -28,7 +28,11 @@ func _ready():
 	var currCell=Vector2(startX,startY)
 	#random walk until you hit dead end, then start at upper left corner and try to find tile
 		#that is unoccupied
-	while(visitedCells.size()<cellSize*cellSize):
+	#idiotic bug in this line where i was checking cellsize instead of map grid
+	#this is hacky thing to avoid hanging game
+	var h = 0
+	while(visitedCells.size()<mapLength*mapHeight&&h < 4*mapLength*mapHeight):
+		h+=1
 		#hacky but doing this because there's no set like java/python
 		visitedCells[currCell]=0
 		var newPos
@@ -36,26 +40,34 @@ func _ready():
 		# starting from top left
 		#when you find that square connect it to visited neighbor
 		if(isDeadEnd(currCell)):
+			print("deadend")
 			var found=false
 			for m in range(mapLength):
 				if(found): break
 				for n in range(mapHeight):
 					if(!visitedCells.has(Vector2(m, n))):
-						currCell = Vector2(m, n)
+						var newCell = Vector2(m, n)
 						for q in range(4):
-							if(visitedCells.has(getCoords(currCell, q))):
+							randomize()
+							var r=randi()
+							q =(q+r)%4
+							if(visitedCells.has(getCoords(newCell, q))):
+								currCell = newCell
 								deleteBoundary(currCell.x, currCell.y, q)
+								found=true
 								break
-						found=true
 						break
 			continue
 					
 				
 		else:
+			print("not deadend")
 			#if it's not a dead end go in random direction
 			#potentially could get hung here but probably not
 			var orient
-			while(true):
+			var g=0
+			while(g<120):
+				g+=1
 				orient = getRandomNumber(4)
 				newPos= getCoords(currCell, orient)
 				if(!isOutOfBounds(newPos.x, newPos.y)&&!visitedCells.has(newPos)): 
@@ -68,6 +80,7 @@ func _ready():
 		#need to maintain list of already visited tiles internally
 		#can probably make a separate function here to create enemies and path to other room, dont
 		#need to
+	print(visitedCells)
 	pass # Replace with function body.
 
 func createSquare(x, y):
@@ -103,7 +116,7 @@ func getRandomNumber(n):
 	return randi()%n
 	
 func isOutOfBounds(x, y):
-	return x<0||y<0||x>=cellSize||y>=cellSize
+	return x<0||y<0||x>=mapLength||y>=mapHeight
 	
 func isDeadEnd(pos):
 	for i in range(4):
