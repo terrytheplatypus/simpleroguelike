@@ -29,45 +29,46 @@ func _ready():
 	#random walk until you hit dead end, then start at upper left corner and try to find tile
 		#that is unoccupied
 	#idiotic bug in this line where i was checking cellsize instead of map grid
-	#this is hacky thing to avoid hanging game
-	var h = 0
-	while(visitedCells.size()<mapLength*mapHeight&&h < 4*mapLength*mapHeight):
-		h+=1
+	while(visitedCells.size()<mapLength*mapHeight):
 		#hacky but doing this because there's no set like java/python
-		visitedCells[currCell]=0
+		if(!visitedCells.has(currCell)):
+			visitedCells[currCell]=0
 		var newPos
 		#if it's a dead end search for new unvisited square with visited neighbor
 		# starting from top left
 		#when you find that square connect it to visited neighbor
 		if(isDeadEnd(currCell)):
-			print("deadend")
 			var found=false
 			for m in range(mapLength):
-				if(found): break
+				if(found):
+					break
 				for n in range(mapHeight):
 					if(!visitedCells.has(Vector2(m, n))):
 						var newCell = Vector2(m, n)
+						randomize()
+						var r=randi()
 						for q in range(4):
-							randomize()
-							var r=randi()
-							q =(q+r)%4
-							if(visitedCells.has(getCoords(newCell, q))):
+							
+							var k =(q+r)%4
+							if(visitedCells.has(getCoords(newCell, k))):
 								currCell = newCell
-								deleteBoundary(currCell.x, currCell.y, q)
+								deleteBoundary(currCell.x, currCell.y, k)
 								found=true
 								break
-						break
+						#the below lines make the algorithm work correctly
+						#but also result in a boring map
+						#it looks more interesting when these are left out,
+						#because there are loops
+						#if(found==true):
+						#	break
 			continue
 					
 				
 		else:
-			print("not deadend")
 			#if it's not a dead end go in random direction
 			#potentially could get hung here but probably not
 			var orient
-			var g=0
-			while(g<120):
-				g+=1
+			while(true):
 				orient = getRandomNumber(4)
 				newPos= getCoords(currCell, orient)
 				if(!isOutOfBounds(newPos.x, newPos.y)&&!visitedCells.has(newPos)): 
@@ -80,7 +81,8 @@ func _ready():
 		#need to maintain list of already visited tiles internally
 		#can probably make a separate function here to create enemies and path to other room, dont
 		#need to
-	print(visitedCells)
+	for u in visitedCells.keys():
+		print(u)
 	pass # Replace with function body.
 
 func createSquare(x, y):
@@ -134,6 +136,8 @@ func getCoords(pos, orient):
 		return Vector2(pos.x, pos.y-1)
 	if(orient==3):
 		return Vector2(pos.x, pos.y+1)
+		
+#make boolean function to check if tile has visited neighbor
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
