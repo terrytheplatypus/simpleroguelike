@@ -12,8 +12,5 @@ cell_size = Vector2( 32, 32 )
 format = 1
 script = ExtResource( 1 )
 
-[node name="TileMap2" type="TileMap" parent="TileMap"]
-tile_set = ExtResource( 2 )
-cell_size = Vector2( 32, 32 )
-format = 1
+[node name="Actors" type="Node2D" parent="TileMap"]
 script = ExtResource( 3 )
