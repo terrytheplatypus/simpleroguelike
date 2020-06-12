@@ -7,7 +7,7 @@ extends TileMap
 #this code is currently broken but it does work with odd number square grids
 var mapHeight=6
 var mapLength=5
-var cellSize=3
+var cellSize=6
 #visitedCells is a dict just so i can have quick lookup
 #doesn't matter in this case but still nice
 var visitedCells={}

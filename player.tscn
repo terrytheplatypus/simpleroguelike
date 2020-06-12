@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://player medium.png" type="Texture" id=1]
-[ext_resource path="res://KinematicBody2D.gd" type="Script" id=2]
-[ext_resource path="res://Player.gd" type="Script" id=3]
+[ext_resource path="res://player.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 16.4802 )
@@ -14,7 +13,6 @@ script = ExtResource( 2 )
 [node name="Player" type="Sprite" parent="."]
 position = Vector2( 0.705322, 0.204071 )
 texture = ExtResource( 1 )
-script = ExtResource( 3 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
