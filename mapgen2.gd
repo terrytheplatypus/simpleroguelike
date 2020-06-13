@@ -8,6 +8,8 @@ extends TileMap
 var mapHeight=6
 var mapLength=5
 var cellSize=6
+#there's probably a way to do this programmatically
+var tileSize=32
 #visitedCells is a dict just so i can have quick lookup
 #doesn't matter in this case but still nice
 var visitedCells={}
@@ -138,7 +140,15 @@ func getCoords(pos, orient):
 		return Vector2(pos.x, pos.y+1)
 		
 #make boolean function to check if tile has visited neighbor
-	
+
+#func for random cell position
+func getRandPos():
+	var bigX= getRandomNumber(mapLength)
+	var bigY= getRandomNumber(mapHeight)
+	var littleX = getRandomNumber(cellSize-3)+2
+	var littleY = getRandomNumber(cellSize-3)+2
+	return Vector2((bigX*cellSize+littleX)*tileSize, (bigY*cellSize+littleY)*tileSize)
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
