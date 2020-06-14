@@ -6,8 +6,8 @@ extends TileMap
 # var b = "text"
 #this code is currently broken but it does work with odd number square grids
 var mapHeight=6
-var mapLength=5
-var cellSize=6
+var mapLength=7
+var cellSize=7
 #there's probably a way to do this programmatically
 var tileSize=32
 #visitedCells is a dict just so i can have quick lookup
@@ -17,7 +17,9 @@ var visitedCells={}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#implementing hunt and seek algorithm:
+	#next line is just to increment current level
+	get_node("/root/Global").currLevel+=1
+	#implementing hunt and kill algorithm:
 	#create grid of MxN big square tiles which are S tiles on a side
 	for i in range(mapLength):
 		for j in range(mapHeight):
@@ -83,8 +85,8 @@ func _ready():
 		#need to maintain list of already visited tiles internally
 		#can probably make a separate function here to create enemies and path to other room, dont
 		#need to
-	for u in visitedCells.keys():
-		print(u)
+	#for u in visitedCells.keys():
+		#print(u)
 	pass # Replace with function body.
 
 func createSquare(x, y):

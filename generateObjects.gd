@@ -7,28 +7,40 @@ extends Node2D
 var mapHeight 
 var mapLength
 var cellSize
+var totalKeyNum
+var enemyNum
+var player = preload("res://player.tscn").instance()
+var key =preload("res://key.tscn")
+var goal = preload("res://goal.tscn")
+var enemy = preload("res://dumbEnemy.tscn")
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	mapHeight = get_parent().mapHeight
 	mapLength = get_parent().mapLength
 	cellSize = get_parent().cellSize
-	var player = preload("res://player.tscn").instance()
+	totalKeyNum=mapHeight*mapLength/5
+	enemyNum = floor(mapHeight*mapLength/3)
+	
 	#get_node("TileMap2").
 	add_child(player)
-	player.position=Vector2(30,30)
+	player.position=get_parent().getRandPos()
 	print(get_parent().mapHeight)
-	for n in range(4):
-		var key = load("res://key.tscn").instance()
-		add_child(key)
-		key.position = get_parent().getRandPos()
-		#
-		#create keys
+	for n in range(totalKeyNum):
+		var keyInstance = key.instance()
+		add_child(keyInstance)
+		keyInstance.position = get_parent().getRandPos()
 		pass
 	#create exit
-	var goal = load("res://goal.tscn").instance()
-	add_child(goal)
-	goal.position = get_parent().getRandPos()
+	var goalInstance = goal.instance()
+	add_child(goalInstance)
+	goalInstance.position = get_parent().getRandPos()
+	#create enemy
+	for i in range(enemyNum):
+		var enemyInstance = enemy.instance()
+		add_child(enemyInstance)
+		enemyInstance.position = get_parent().getRandPos()
 	pass # Replace with function body.
 	#add p
 
