@@ -7,10 +7,10 @@
 script = ExtResource( 1 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_left = 323.561
-margin_top = 146.471
-margin_right = 530.561
-margin_bottom = 186.471
+margin_left = 324.0
+margin_top = 146.0
+margin_right = 558.0
+margin_bottom = 234.0
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false

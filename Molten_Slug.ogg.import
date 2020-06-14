@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Molten_Slug.ogg-dd42357b58ecc757e9278c23c7f0e00f.oggstr"
+
+[deps]
+
+source_file="res://Molten_Slug.ogg"
+dest_files=[ "res://.import/Molten_Slug.ogg-dd42357b58ecc757e9278c23c7f0e00f.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
